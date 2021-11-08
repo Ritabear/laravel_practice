@@ -1,4 +1,4 @@
-@extends("laysouts.layout")
+@extends("layouts.layout")
 
 @section("main")
 <div class="menu col-3">選單</div>
@@ -9,4 +9,3 @@
 @section("script")
 JSSSSS
 @endsection
-
