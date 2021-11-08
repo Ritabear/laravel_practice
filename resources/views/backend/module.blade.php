@@ -10,39 +10,50 @@
             <button class="btn btn-sm btn-primary float-left" id="addRow">新增</button>
             {{ $header }}
         </h5>
-        <table>
+        <table class="table border-none text-center">
             <tr>
-                <td width="">網站標題</td>
-                <td width="">替代文字</td>
-                <td width="10%">顯示</td>
-                <td width="10%">刪除</td>
-                <td width="10%">操作</td>
+                @isset($cols)
+                @foreach ($cols as $col)
+                <td width="{{ $col }}">{{ $col }}</td>
+                @endforeach
+                @endisset
             </tr>
+            @isset($rows)
+            {{-- @if ($module != 'Total' && $module != 'Bottom') --}}
+            @foreach ($rows as $row)
             <tr>
-                @isset($rows)
-                @foreach ($rows as $row)
-            </tr>
-            <tr>
-                {{-- <td> <img src="{{ asset('img/' . $row->img) }}" style="width: 300px; height:30px" alt=""> </td> --}}
-                <td> <img src="{{ asset('storage/' . $row->img) }}" style="width: 300px; height:30px" alt=""> </td>
-
-                <td>{{ $row->text }} </td>
-                <td><button class="btn btn-success btn-sm show" data-id="{{ $row->id }}">
-                        @if ($row->sh == 1)
-                        顯示
-                        @else
-                        隱藏
-                        @endif
-                    </button> </td>
-                <td><button class="btn btn-danger btn-sm delete" data-id="{{ $row->id }}">刪除</button> </td>
-                <td><button class="btn btn-info btn-sm edit" data-id="{{ $row->id }}">編輯</button> </td>
+                @foreach ($row as $item)
+                {{-- @dd($item); --}}
+                <td>
+                    @switch($item['tag'])
+                    @case('img')
+                    @include('layouts.img',$item)
+                    @break
+                    @case('button')
+                    @include('layouts.button',$item)
+                    @break
+                    @default
+                    {{ $item['text'] }}
+                    @endswitch
+                </td>
+                @endforeach
             </tr>
             @endforeach
-
+            {{-- @else
+                <tr>
+                     如果$module != 'Total' && $module != 'Bottom'     這是Total 才有的
+                    <td>{{ $cols[0] }}</td>
+            <td>{{ $rows[0]['text'] }}</td>
+            <td>@include("layouts.button",$rows[1])</td>
+            </tr>
+            @endif --}}
             @endisset
+
         </table>
     </div>
+
 </div>
+
 
 @endsection
 
@@ -68,8 +79,7 @@
 
     $(".edit").on("click", function() {
         let id = $(this).data('id')
-        // $.get(`/modals/{{ strtolower($module) }}/${id}`, function(modal) {
-        $.get(`/modals/title/${id}`, function(modal) {
+        $.get(`/modals/{{ strtolower($module) }}/${id}`, function(modal) {
             $("#modal").html(modal)
             $("#baseModal").modal("show")
 
@@ -85,10 +95,8 @@
         let id = $(this).data('id')
         // let _this = $(this)
         $.ajax({
-            type: 'delete',
-            // 前面是/admin/~~/${id}
-            // url: `{{ strtolower($module) }}/${id}`
-            url: `/admin/title/${id}`
+            type: 'delete'
+            , url: `{{ strtolower($module) }}/${id}`
             , success: function() {
                 location.reload() //重整頁面
                 // _this預先存了變數，如果是裡面設$(this) 指的是function； parents往上找到要的第一個標籤
@@ -102,9 +110,8 @@
         // let _this = $(this)
         $.ajax({
             //改顯示狀況是更新所以是patch
-            type: 'patch',
-            // , url: `{{ strtolower($module) }}/sh/${id}`,
-            url: `/admin/title/sh/${id}`,
+            type: 'patch'
+            , url: `{{ strtolower($module) }}/sh/${id}`,
             // 這邊新增的原因:title變更顯示的時候，希望是單選，只顯示一個 點選.show後會去route->去TitleController display()回傳img
             success: function() {
                 location.reload()

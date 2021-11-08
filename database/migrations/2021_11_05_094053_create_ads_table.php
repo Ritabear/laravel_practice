@@ -15,6 +15,9 @@ class CreateAdsTable extends Migration
     {
         Schema::create('ads', function (Blueprint $table) {
             $table->id();
+            // 如果用string就要指定多長
+            $table->text('text');
+            $table->boolean('sh')->default(1);
             $table->timestamps();
         });
     }
