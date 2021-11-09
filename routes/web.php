@@ -84,7 +84,6 @@ Route::prefix('admin')->group(function () {
 //modals:有哪些需要新增資料
 // Route::view('/modals/addTitle', 'modals.base_modal',['modal_header' => '新增網站標題']);
 Route::get('/modals/addTitle', [TitleController::class, 'create']);
-Route::post('/modals/addTitle', [TitleController::class, 'create']);
 Route::get('/modals/addAd', [AdController::class, 'create']);
 Route::get('/modals/addImage', [ImageController::class, 'create']);
 Route::get('/modals/addMvim', [MvimController::class, 'create']);

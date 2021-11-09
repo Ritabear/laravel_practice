@@ -16,7 +16,6 @@
                     @method($method)
                     @endisset
                     <table class="m-auto">
-                        {{-- EP5 把變數從web.php >>TitleController 這邊判斷有沒有變數&做甚麼 --}}
                         @isset($modal_body)
                         @foreach ($modal_body as $row)
                         <tr>

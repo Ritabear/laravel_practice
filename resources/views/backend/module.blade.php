@@ -5,9 +5,11 @@
 <div class="main col-9 p-0 d-flex flex-wrap align-items-start">
     <div class="col-8 border py-3 text-center">後臺管理區</div>
     <button class="col-4 btn btn-light border py-3 text-center">管理登出</button>
-    <div class="border w-100 p-1" style="height: 500px;">
+    <div class="border w-100 p-1" style="height: 500px;overflow:auto">
         <h5 class="text-center border-bottom py-3">
+            @if ($module != 'Total' && $module != 'Bottom')
             <button class="btn btn-sm btn-primary float-left" id="addRow">新增</button>
+            @endif
             {{ $header }}
         </h5>
         <table class="table border-none text-center">
@@ -19,7 +21,7 @@
                 @endisset
             </tr>
             @isset($rows)
-            {{-- @if ($module != 'Total' && $module != 'Bottom') --}}
+            @if ($module != 'Total' && $module != 'Bottom')
             @foreach ($rows as $row)
             <tr>
                 @foreach ($row as $item)
@@ -39,14 +41,14 @@
                 @endforeach
             </tr>
             @endforeach
-            {{-- @else
-                <tr>
-                     如果$module != 'Total' && $module != 'Bottom'     這是Total 才有的
-                    <td>{{ $cols[0] }}</td>
-            <td>{{ $rows[0]['text'] }}</td>
-            <td>@include("layouts.button",$rows[1])</td>
+            @else
+            <tr>
+                {{-- 如果$module != 'Total' && $module != 'Bottom' 這是Total 才有的 --}}
+                <td>{{ $cols[0] }}</td>
+                <td>{{ $rows[0]['text'] }}</td>
+                <td>@include("layouts.button",$rows[1])</td>
             </tr>
-            @endif --}}
+            @endif
             @endisset
 
         </table>
