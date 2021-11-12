@@ -14,6 +14,7 @@ class TitleController extends Controller
      */
     public function index()
     {
+        // dd($this->view);
         $all = Title::all();
         $cols = ['網站標題', '替代文字', '顯示', '刪除', '操作'];
         $rows = [];
@@ -57,15 +58,24 @@ class TitleController extends Controller
             $rows[] = $tmp;
         }
         // dd($rows);
+        //blade 現在都是在controller 帶參數，所以可以多做一個
+        //如果get顯示是多筆，但title只要一筆，然後丟到回傳的陣列
+        // $useTitle = Title::where('sh', 1)->first();  //Controller 中寫了
 
-        $view = [
-            'header' => '網站標題管理',
-            'module' => 'Title',
-            'cols' => $cols,
-            'rows' => $rows,
-        ];
+        // $view = [
+        //     'header' => '網站標題管理',
+        //     'module' => 'Title',
+        //     'cols' => $cols,
+        //     'rows' => $rows,
+        //     'useTitle' => $useTitle,
+        // ];
+        $this->view['header'] = '網站標題管理';
+        $this->view['module'] = 'Title';
+        $this->view['cols'] = $cols;
+        $this->view['rows'] = $rows;
+        // dd($this->view)
 
-        return view('backend.module', $view);
+        return view('backend.module', $this->view);
     }
 
     /**

@@ -30,15 +30,12 @@ class TotalController extends Controller
             ],
         ];
 
-        $view = [
-            'header' => '進站總人數管理',
-            // 別放錯
-            'module' => 'Total',
-            'cols' => $cols,
-            'rows' => $rows,
-        ];
+        $this->view['header'] = '進站總人數管理';
+        $this->view['module'] = 'Total';
+        $this->view['cols'] = $cols;
+        $this->view['rows'] = $rows;
 
-        return view('backend.module', $view);
+        return view('backend.module', $this->view);
     }
 
     //route +controller +model 用好就可以用

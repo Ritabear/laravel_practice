@@ -3,10 +3,12 @@
 use App\Http\Controllers\AdController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BottomController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MvimController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\TitleController;
 use App\Http\Controllers\TotalController;
 use Illuminate\Support\Facades\Route;
@@ -21,10 +23,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::view('/', 'home');
-Route::view('/admin', 'backend.module', ['header' => '123123']);
-
-// Route::view('/title', 'layouts.layout');
+Route::view('/', [HomeController::class, 'index']);
+Route::redirect('/admin', '/admin/title');
 
 Route::prefix('admin')->group(function () {
     Route::get('/title', [TitleController::class, 'index']);
@@ -37,7 +37,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/admin', [AdminController::class, 'index']);
     Route::get('/menu', [MenuController::class, 'index']);
     //符合這個route會導到次選單管理頁面
-    // Route::get('/submenu/{menu_id}', [SubMenuController::class, 'index']);
+    Route::get('/submenu/{menu_id}', [SubMenuController::class, 'index']);
 
     //post
     Route::post('/title', [TitleController::class, 'store']);

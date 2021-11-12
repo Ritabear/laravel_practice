@@ -47,15 +47,13 @@ class ImageController extends Controller
             ];
             $rows[] = $tmp;
         }
+        $this->view['header'] = '校園映像圖片管理';
+        $this->view['module'] = 'Image';
+        $this->view['cols'] = $cols;
+        $this->view['rows'] = $rows;
+        $this->view['paginate'] = $all->links();
 
-        $view = [
-            'header' => '校園映像圖片管理',
-            'module' => 'Image',
-            'cols' => $cols,
-            'rows' => $rows,
-        ];
-
-        return view('backend.module', $view);
+        return view('backend.module', $this->view);
     }
 
     /**

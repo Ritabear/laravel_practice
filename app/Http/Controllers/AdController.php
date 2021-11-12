@@ -42,15 +42,12 @@ class AdController extends Controller
             $rows[] = $tmp;
         }
 
-        //dd($rows);//不停try 寫出東西dd 中斷在這
-        $view = [
-            'header' => '動態廣告文字管理',
-            'module' => 'Ad',
-            'cols' => $cols,
-            'rows' => $rows,
-        ];
+        $this->view['header'] = '動態廣告文字管理';
+        $this->view['module'] = 'Ad';
+        $this->view['cols'] = $cols;
+        $this->view['rows'] = $rows;
 
-        return view('backend.module', $view);
+        return view('backend.module', $this->view);
     }
 
     public function create()

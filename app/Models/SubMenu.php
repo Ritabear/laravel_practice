@@ -12,6 +12,7 @@ class SubMenu extends Model
 
     public function menu()
     {
+        // 找主選單
         return $this->belongsTo("App\Models\Menu");
     }
 }
